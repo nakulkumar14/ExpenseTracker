@@ -1,0 +1,23 @@
+package com.tracker.services;
+
+import com.tracker.dto.ExpenseDetailDTO;
+import com.tracker.model.ExpenseDetail;
+
+import java.util.List;
+
+/**
+ * Created by nakulkumar on 24/6/16.
+ */
+public interface ExpenseService {
+    void addExpense(ExpenseDetailDTO expenseDetailDTO);
+
+    List<ExpenseDetail> getExpenses(String date);
+
+    void deleteByDescription(String description);
+
+    List<ExpenseDetail> getAll();
+
+    List<ExpenseDetail> getAllForToday();
+
+    List<ExpenseDetail> getMonthlyExpenses(String month, String year);
+}
