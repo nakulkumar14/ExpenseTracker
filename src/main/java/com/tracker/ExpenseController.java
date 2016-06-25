@@ -74,6 +74,20 @@ public class ExpenseController {
     @RequestMapping(value = "/editExpense/{id}", method = RequestMethod.GET)
     public String editExpense(@PathVariable("id") Long id, Model model) {
         LOG.info("Request to edit record with id : " + id);
+        ExpenseDetail expenseDetail = expenseService.getExpenseDetailById(id);
+        LOG.info("Expense Detail for id : " + id + " : " + expenseDetail);
+        model.addAttribute("expenseDetailToEdit", expenseDetail);
+
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        model.addAttribute("expenseDetails", expenseDetails);
+        return "index";
+    }
+
+    @RequestMapping(value = "editExpenseDetail", method = RequestMethod.POST)
+    public String editExpenseDetail(@ModelAttribute("expenseDetailDTO") ExpenseDetailDTO expenseDetailDTO, ModelMap model) {
+        LOG.info("Updating expense detail : " + expenseDetailDTO);
+        ExpenseDetail expenseDetail = expenseService.updateExpenseDetail(expenseDetailDTO);
+        model.addAttribute("isUpdated", expenseDetail != null ? true : false);
         return "index";
     }
 

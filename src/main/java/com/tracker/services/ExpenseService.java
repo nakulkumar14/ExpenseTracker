@@ -13,6 +13,10 @@ public interface ExpenseService {
 
     List<ExpenseDetail> getExpenses(String date);
 
+    ExpenseDetail getExpenseDetailById(Long id);
+
+    ExpenseDetail updateExpenseDetail(ExpenseDetailDTO expenseDetailDTO);
+
     boolean delete(Long id);
 
     List<ExpenseDetail> getAll();

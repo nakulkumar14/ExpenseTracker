@@ -87,4 +87,17 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         return expenseDetailDao.getMonthlyExpenses(startDate);
     }
+
+    @Override
+    public ExpenseDetail getExpenseDetailById(Long id) {
+        return expenseDetailDao.getExpenseDetailById(id);
+    }
+
+    @Override
+    public ExpenseDetail updateExpenseDetail(ExpenseDetailDTO expenseDetailDTO) {
+        ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
+        expenseDetail.setId(expenseDetailDTO.getId());
+        expenseDetail.setUpdated(new Date());
+        return expenseDetailDao.updateExpenseDetail(expenseDetail);
+    }
 }

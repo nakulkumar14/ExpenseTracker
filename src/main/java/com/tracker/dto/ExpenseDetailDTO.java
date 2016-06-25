@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by nakulkumar on 24/6/16.
  */
 public class ExpenseDetailDTO {
+    private Long id;
     private String description;
     private Double amount;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -23,6 +24,14 @@ public class ExpenseDetailDTO {
         this.amount = amount;
         this.created = created;
         this.updated = updated;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -60,7 +69,8 @@ public class ExpenseDetailDTO {
     @Override
     public String toString() {
         return "ExpenseDetailDTO{" +
-                "description='" + description + '\'' +
+                "id=" + id +
+                ", description='" + description + '\'' +
                 ", amount=" + amount +
                 ", created=" + created +
                 ", updated=" + updated +

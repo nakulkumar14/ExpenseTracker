@@ -72,4 +72,17 @@ public class ExpenseDetailDaoImpl implements ExpenseDetailDao {
         query.setParameter("created", new SimpleDateFormat("yyyy-MM").format(date));
         return query.list();
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ExpenseDetail getExpenseDetailById(Long id) {
+        return (ExpenseDetail) getCurrentSession().get(ExpenseDetail.class, id);
+    }
+
+    @Transactional
+    @Override
+    public ExpenseDetail updateExpenseDetail(ExpenseDetail expenseDetail) {
+        LOG.info("Updating expense detail for id : " + expenseDetail.getId());
+        return (ExpenseDetail) getCurrentSession().merge(expenseDetail);
+    }
 }

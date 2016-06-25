@@ -12,7 +12,11 @@ public interface ExpenseDetailDao {
 
     void save(ExpenseDetail expenseDetail);
 
+    ExpenseDetail getExpenseDetailById(Long id);
+
     boolean delete(Long id);
+
+    ExpenseDetail updateExpenseDetail(ExpenseDetail expenseDetail);
 
     List<ExpenseDetail> getAll();
 

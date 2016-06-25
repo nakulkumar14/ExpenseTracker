@@ -37,6 +37,15 @@
     </table>
     <br>
     <c:if test="${deleted}">Deletion succesful!</c:if>
+    <c:if test="${isUpdated}">Expense Detail updated succesfully!</c:if>
+
+    <form class="form-inline" method="post" action="/editExpenseDetail">
+        <input type="hidden" name="id" value="${expenseDetailToEdit.id}">
+        <input type="text" name="description" value="${expenseDetailToEdit.description}" required>
+        <input type="number" name="amount" step="0.01" min="0" value="${expenseDetailToEdit.amount}" required>
+        <input type="hidden" name="created" value="${expenseDetailToEdit.created}">
+        <input type="submit" value="Edit" class="btn btn-info">
+    </form>
 
     <form class="form-inline" method="post" action="/addExpense">
         <input type="text" name="description" placeholder="Description" required>
