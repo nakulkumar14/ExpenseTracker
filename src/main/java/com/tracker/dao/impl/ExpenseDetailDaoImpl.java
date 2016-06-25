@@ -2,6 +2,7 @@ package com.tracker.dao.impl;
 
 import com.tracker.dao.ExpenseDetailDao;
 import com.tracker.model.ExpenseDetail;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,6 +23,8 @@ import java.util.List;
 @Repository("expenseDetailDao")
 public class ExpenseDetailDaoImpl implements ExpenseDetailDao {
 
+    private static Logger LOG = Logger.getLogger(ExpenseDetailDaoImpl.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -33,13 +36,19 @@ public class ExpenseDetailDaoImpl implements ExpenseDetailDao {
     @Transactional
     @Override
     public void save(ExpenseDetail expenseDetail) {
+        LOG.info("Saving expense details for description : " + expenseDetail.getDescription() + " and created : " + expenseDetail.getCreated());
         getCurrentSession().save(expenseDetail);
     }
 
     @Transactional
     @Override
-    public void deleteByDescription(String description) {
-
+    public boolean delete(Long id) {
+        ExpenseDetail expenseDetail = (ExpenseDetail) getCurrentSession().get(ExpenseDetail.class, id);
+        if (expenseDetail != null) {
+            getCurrentSession().delete(expenseDetail);
+            return true;
+        }
+        return false;
     }
 
     @Transactional(readOnly = true)

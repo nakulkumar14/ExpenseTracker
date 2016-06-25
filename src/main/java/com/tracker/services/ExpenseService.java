@@ -13,7 +13,7 @@ public interface ExpenseService {
 
     List<ExpenseDetail> getExpenses(String date);
 
-    void deleteByDescription(String description);
+    boolean delete(Long id);
 
     List<ExpenseDetail> getAll();
 

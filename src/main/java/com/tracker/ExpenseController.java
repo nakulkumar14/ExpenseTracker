@@ -7,6 +7,7 @@ import com.tracker.services.ExpenseService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class ExpenseController {
         LOG.info("Getting expense details for current day");
         List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
         LOG.info("Expense Details fetched : " + expenseDetails.size());
-        model.addAttribute("expenseDetails", gson.toJson(expenseDetails));
+        model.addAttribute("expenseDetails", expenseDetails);
         return "index";
     }
 
@@ -48,15 +49,25 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "addExpense", method = RequestMethod.POST)
-    public String addExpense(@ModelAttribute("expenseDetailDTO") ExpenseDetailDTO expenseDetailDTO) {
+    public String addExpense(@ModelAttribute("expenseDetailDTO") ExpenseDetailDTO expenseDetailDTO, ModelMap model) {
+        LOG.info("Request to add description : " + expenseDetailDTO.getDescription());
         expenseService.addExpense(expenseDetailDTO);
+
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        LOG.info("Expense Details fetched : " + expenseDetails.size());
+        model.addAttribute("expenseDetails", expenseDetails);
         return "index";
     }
 
-    @RequestMapping(value = "deleteByDescription", method = RequestMethod.POST)
-    public String deleteByDescription(@RequestParam("description") String description) {
-        System.out.println("Description to delete : " + description);
-        expenseService.deleteByDescription(description);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Long id, Model model) {
+        LOG.info("Request to delete for id : " + id);
+        expenseService.delete(id);
+        model.addAttribute("deleted", true);
+        
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        LOG.info("Expense Details fetched : " + expenseDetails.size());
+        model.addAttribute("expenseDetails", expenseDetails);
         return "index";
     }
 

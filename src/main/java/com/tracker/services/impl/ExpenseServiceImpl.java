@@ -50,8 +50,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void deleteByDescription(String description) {
-        expenseDetailDao.deleteByDescription(description);
+    public boolean delete(Long id) {
+        return expenseDetailDao.delete(id);
     }
 
     @Override

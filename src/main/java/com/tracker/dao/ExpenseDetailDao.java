@@ -12,7 +12,7 @@ public interface ExpenseDetailDao {
 
     void save(ExpenseDetail expenseDetail);
 
-    void deleteByDescription(String description);
+    boolean delete(Long id);
 
     List<ExpenseDetail> getAll();
 

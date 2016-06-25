@@ -5,76 +5,77 @@
   Time: 5:40 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Expense Tracker</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-
+<link href="/css/bootstrap.css" rel="stylesheet">
+<style>
+    #container {
+        padding: 2%;
+    }
+</style>
 <body>
-<%@ include file="header.jsp" %>
-${expenseDetails}
-<br>
-Add
-<table>
-    <thead>
-    <th>Description</th>
-    <th>Amount</th>
-    </thead>
-    <form method="post" action="/addExpense">
+<div id="container">
+    <%@ include file="header.jsp" %>
+    <table class="table table-hover">
         <tr>
-            <td><input type="text" name="description" required></td>
-            <td><input type="number" name="amount" step="0.01" min="0" required></td>
+            <th>Description</th>
+            <th>Amount</th>
         </tr>
-        <tr>
-            <td><input type="submit" value="Add"></td>
-        </tr>
+        <c:forEach var="expense" items="${expenseDetails}">
+            <tr>
+                <td><c:out value="${expense.description}"/></td>
+                <td><c:out value="${expense.amount}"/></td>
+                <td><a href="<c:url value='/delete/${expense.id}'/>">Delete</a></td>
+            </tr>
+        </c:forEach>
+    </table>
+    <br>
+    <c:if test="${deleted}">Deletion succesful!</c:if>
+
+    <form class="form-inline" method="post" action="/addExpense">
+        <input type="text" name="description" placeholder="Description" required>
+        <input type="number" name="amount" step="0.01" min="0" placeholder="Amount" required>
+        <input type="submit" value="Add" class="btn btn-info">
     </form>
-</table>
 
-<br>
+    <form class="form-inline" action="getExpenses" method="post">
+        Get Expense Details :
+        <input type="date" name="date">
+        <input type="submit" value="Get Details" class="btn btn-info">
+    </form>
 
-<form action="getExpenses" method="post">
-    Get Expense Details for Day :
-    <input type="date" name="date">
-    <input type="submit" value="Get Details">
-</form>
-
-<form action="/getMonthlyExpenses" method="post">
-    <select name="month" required>
-        <option value='0'>--Select Month--</option>
-        <option selected value='01'>Janaury</option>
-        <option value='02'>February</option>
-        <option value='03'>March</option>
-        <option value='04'>April</option>
-        <option value='05'>May</option>
-        <option value='06'>June</option>
-        <option value='07'>July</option>
-        <option value='08'>August</option>
-        <option value='09'>September</option>
-        <option value='10'>October</option>
-        <option value='11'>November</option>
-        <option value='12'>December</option>
-    </select>
-    <select id="year" name="year" required>
-        <script>
-            var myDate = new Date();
-            var year = myDate.getFullYear();
-            for (var i = 2012; i < year + 1; i++) {
-                document.write('<option value="' + i + '">' + i + '</option>');
-            }
-        </script>
-    </select>
-    <input type="submit">
-</form>
-
-<a href="/getAll">Get all</a>
-
-<form method="post" action="/deleteByDescription">
-    Description [delete] : <input type="text" name="description" required>
-    <input type="submit">
-</form>
-
+    <form action="/getMonthlyExpenses" method="post">
+        <select name="month" required>
+            <option value='0'>--Select Month--</option>
+            <option selected value='01'>Janaury</option>
+            <option value='02'>February</option>
+            <option value='03'>March</option>
+            <option value='04'>April</option>
+            <option value='05'>May</option>
+            <option value='06'>June</option>
+            <option value='07'>July</option>
+            <option value='08'>August</option>
+            <option value='09'>September</option>
+            <option value='10'>October</option>
+            <option value='11'>November</option>
+            <option value='12'>December</option>
+        </select>
+        <select id="year" name="year" required>
+            <script>
+                var myDate = new Date();
+                var year = myDate.getFullYear();
+                for (var i = 2012; i < year + 1; i++) {
+                    document.write('<option value="' + i + '">' + i + '</option>');
+                }
+            </script>
+        </select>
+        <input type="submit">
+    </form>
+</div>
 </body>
 </html>
