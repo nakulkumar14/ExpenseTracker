@@ -28,8 +28,9 @@
         </tr>
         <c:forEach var="expense" items="${expenseDetails}">
             <tr>
-                <td><c:out value="${expense.description}"/></td>
-                <td><c:out value="${expense.amount}"/></td>
+                <td id="expense_description"><c:out value="${expense.description}"/></td>
+                <td id="expense_amount  "><c:out value="${expense.amount}"/></td>
+                <td><a href="<c:url value='/editExpense/${expense.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/delete/${expense.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>

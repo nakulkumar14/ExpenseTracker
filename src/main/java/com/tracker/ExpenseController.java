@@ -64,10 +64,16 @@ public class ExpenseController {
         LOG.info("Request to delete for id : " + id);
         expenseService.delete(id);
         model.addAttribute("deleted", true);
-        
+
         List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
         LOG.info("Expense Details fetched : " + expenseDetails.size());
         model.addAttribute("expenseDetails", expenseDetails);
+        return "index";
+    }
+
+    @RequestMapping(value = "/editExpense/{id}", method = RequestMethod.GET)
+    public String editExpense(@PathVariable("id") Long id, Model model) {
+        LOG.info("Request to edit record with id : " + id);
         return "index";
     }
 
