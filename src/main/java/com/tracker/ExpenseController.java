@@ -88,6 +88,9 @@ public class ExpenseController {
         LOG.info("Updating expense detail : " + expenseDetailDTO);
         ExpenseDetail expenseDetail = expenseService.updateExpenseDetail(expenseDetailDTO);
         model.addAttribute("isUpdated", expenseDetail != null ? true : false);
+
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        model.addAttribute("expenseDetails", expenseDetails);
         return "index";
     }
 
