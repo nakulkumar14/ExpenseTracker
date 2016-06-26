@@ -28,17 +28,25 @@ public class ExpenseController {
     public String index(ModelMap model) {
         LOG.info("Getting expense details for current day");
         List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+
+        Double totalExpenses = sumTotalExpenses(expenseDetails);
+
         LOG.info("Expense Details fetched : " + expenseDetails.size());
         model.addAttribute("expenseDetails", expenseDetails);
+        model.addAttribute("totalExpenses", totalExpenses);
         return "index";
     }
 
     @RequestMapping(value = "getExpenses", method = RequestMethod.POST)
-    @ResponseBody
-    public String getExpenses(@RequestParam("date") String date) {
-        System.out.println("Request received : " + date);
+    public String getExpenses(@RequestParam("date") String date, ModelMap model) {
+        LOG.info("Request received to get expenses  for date : " + date);
         List<ExpenseDetail> expenseDetails = expenseService.getExpenses(date);
-        return gson.toJson(expenseDetails);
+        model.addAttribute("expenseDetails", expenseDetails);
+
+        Double totalExpenses = sumTotalExpenses(expenseDetails);
+        model.addAttribute("totalExpenses", totalExpenses);
+
+        return "index";
     }
 
     @RequestMapping(value = "getMonthlyExpenses", method = RequestMethod.POST)
@@ -56,6 +64,10 @@ public class ExpenseController {
         List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
         LOG.info("Expense Details fetched : " + expenseDetails.size());
         model.addAttribute("expenseDetails", expenseDetails);
+
+        Double totalExpenses = sumTotalExpenses(expenseDetails);
+        model.addAttribute("totalExpenses", totalExpenses);
+
         return "index";
     }
 
@@ -68,6 +80,10 @@ public class ExpenseController {
         List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
         LOG.info("Expense Details fetched : " + expenseDetails.size());
         model.addAttribute("expenseDetails", expenseDetails);
+
+        Double totalExpenses = sumTotalExpenses(expenseDetails);
+        model.addAttribute("totalExpenses", totalExpenses);
+
         return "index";
     }
 
@@ -101,5 +117,13 @@ public class ExpenseController {
         String result = "" + details;
         System.out.println(details);
         return result;
+    }
+
+    private Double sumTotalExpenses(List<ExpenseDetail> expenseDetails) {
+        Double totalExpenses = 0.0;
+        for (ExpenseDetail expenseDetail : expenseDetails) {
+            totalExpenses += expenseDetail.getAmount();
+        }
+        return totalExpenses;
     }
 }

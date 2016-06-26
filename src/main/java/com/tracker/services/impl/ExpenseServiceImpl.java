@@ -41,8 +41,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             c.setTime(actualDate);
             c.add(Calendar.DATE, 1);
             Date newDate = c.getTime();
-
-            return expenseDetailDao.getDetailsInRange(actualDate, newDate);
+            LOG.info("Fetching expense detail in range : " + actualDate + " and " + newDate);
+                return expenseDetailDao.getDetailsInRange(actualDate, newDate);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<ExpenseDetail>();

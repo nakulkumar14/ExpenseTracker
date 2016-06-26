@@ -34,10 +34,18 @@
                 <td><a href="<c:url value='/delete/${expense.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>
+        <tr>
+            <th>Total</th>
+            <th>${totalExpenses}</th>
+        </tr>
     </table>
     <br>
-    <c:if test="${deleted}">Deletion succesful!</c:if>
-    <c:if test="${isUpdated}">Expense Detail updated succesfully!</c:if>
+    <c:if test="${deleted}">
+        <div id="deleteMessage" style="color: red">Deletion successful!</div>
+    </c:if>
+    <c:if test="${isUpdated}">
+        <div id="updateMessage" style="color:#4cee2d;">Expense Detail updated successfully!</div>
+    </c:if>
 
     <%--Edit Expense Detail Form--%>
     <c:if test="${not empty expenseDetailToEdit}">
@@ -54,14 +62,17 @@
     <form class="form-inline" method="post" action="/addExpense">
         <input type="text" name="description" placeholder="Description" required>
         <input type="number" name="amount" step="0.01" min="0" placeholder="Amount" required>
-        <input type="submit" value="Add" class="btn btn-info">
+        <input type="submit" value="Add New Expense" class="btn btn-info">
     </form>
 
+    <%--Show expenses for day--%>
     <form class="form-inline" action="getExpenses" method="post">
         Get Expense Details :
         <input type="date" name="date">
         <input type="submit" value="Get Details" class="btn btn-info">
     </form>
+
+    <h3>To be done : monthly expenses</h3>
 
     <form action="/getMonthlyExpenses" method="post">
         <select name="month" required>
