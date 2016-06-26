@@ -26,7 +26,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void addExpense(ExpenseDetailDTO expenseDetailDTO) {
         ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
-        expenseDetail.setCreated(new Date());
+//        expenseDetail.setCreated(new Date());
         expenseDetail.setUpdated(new Date());
         expenseDetailDao.save(expenseDetail);
     }
@@ -42,7 +42,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             c.add(Calendar.DATE, 1);
             Date newDate = c.getTime();
             LOG.info("Fetching expense detail in range : " + actualDate + " and " + newDate);
-                return expenseDetailDao.getDetailsInRange(actualDate, newDate);
+            return expenseDetailDao.getDetailsInRange(actualDate, newDate);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<ExpenseDetail>();

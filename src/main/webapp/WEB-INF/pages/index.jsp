@@ -62,6 +62,9 @@
     <form class="form-inline" method="post" action="/addExpense">
         <input type="text" name="description" placeholder="Description" required>
         <input type="number" name="amount" step="0.01" min="0" placeholder="Amount" required>
+        <c:if test="${not empty expenseDetails}">
+            <input type="hidden" name="created" value="${expenseDetails[0].created}">
+        </c:if>
         <input type="submit" value="Add New Expense" class="btn btn-info">
     </form>
 
