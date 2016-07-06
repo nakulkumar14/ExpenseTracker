@@ -75,6 +75,14 @@
         <input type="submit" value="Get Details" class="btn btn-info">
     </form>
 
+    <div id="exportDailyReport">
+        <form class="form-inline" action="exportToXLS" method="post">
+            <label id="report_label">Mail Report for the day : </label>
+            <input type="date" name="date">
+            <input type="submit" value="Generate Report" class="btn btn-info">
+        </form>
+    </div>
+
     <h3>To be done : monthly expenses</h3>
 
     <form action="/getMonthlyExpenses" method="post">

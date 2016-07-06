@@ -26,7 +26,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void addExpense(ExpenseDetailDTO expenseDetailDTO) {
         ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
-//        expenseDetail.setCreated(new Date());
+        if (expenseDetail.getCreated() == null)
+            expenseDetail.setCreated(new Date());
         expenseDetail.setUpdated(new Date());
         expenseDetailDao.save(expenseDetail);
     }

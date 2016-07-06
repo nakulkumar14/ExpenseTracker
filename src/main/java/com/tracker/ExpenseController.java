@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.tracker.dto.ExpenseDetailDTO;
 import com.tracker.model.ExpenseDetail;
 import com.tracker.services.ExpenseService;
+import com.tracker.services.ExportService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class ExpenseController {
 
     @Autowired
     private ExpenseService expenseService;
+
+    @Autowired
+    private ExportService exportService;
 
     private Gson gson = new Gson();
 
@@ -118,6 +122,15 @@ public class ExpenseController {
         System.out.println(details);
         return result;
     }
+
+    @RequestMapping(value = "exportToXLS", method = RequestMethod.POST)
+    public String exportToXLS(@RequestParam("date") String date) {
+        LOG.info("Request to generate report for : " + date);
+        List<ExpenseDetail> expenseDetails = expenseService.getExpenses(date);
+        exportService.exportToXLS(expenseDetails,date);
+        return "index";
+    }
+
 
     private Double sumTotalExpenses(List<ExpenseDetail> expenseDetails) {
         Double totalExpenses = 0.0;
