@@ -125,9 +125,15 @@ public class ExpenseController {
 
     @RequestMapping(value = "exportToXLS", method = RequestMethod.POST)
     public String exportToXLS(@RequestParam("date") String date) {
+//        try {
+        //Prints the hostname i.e., machine name
+//            LOG.info(InetAddress.getLocalHost().getHostName());
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
         LOG.info("Request to generate report for : " + date);
         List<ExpenseDetail> expenseDetails = expenseService.getExpenses(date);
-        exportService.exportToXLS(expenseDetails,date);
+        exportService.exportToXLS(expenseDetails, date);
         return "index";
     }
 

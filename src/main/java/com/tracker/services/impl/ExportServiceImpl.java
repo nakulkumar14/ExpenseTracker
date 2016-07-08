@@ -35,14 +35,16 @@ public class ExportServiceImpl implements ExportService {
 
         buildReport(worksheet, startRowIndex, startColIndex);
 
+        LOG.info("Writing details to the report");
         fillReport(worksheet, startRowIndex, startColIndex, expenseDetails);
 
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(dateq);
             String fileName = "Report-" + formatter.format(date) + ".xls";
-            LOG.info(fileName);
-            File file = new File("/home/nakulkumar/" + fileName);
+            LOG.info("Creating report with name : " + fileName);
+            String username = System.getProperty("user.name");
+            File file = new File("/home/" + username + "/" + fileName);
             FileOutputStream outputStream = new FileOutputStream(file, false);
             workbook.write(outputStream);
             outputStream.flush();
@@ -57,8 +59,10 @@ public class ExportServiceImpl implements ExportService {
         worksheet.setColumnWidth(2, 5000);
         worksheet.setColumnWidth(3, 5000);
 
+        LOG.info("Writing title for report");
         buildTitle(worksheet, startRowIndex, startColIndex);
 
+        LOG.info("Writing report headers");
         buildHeaders(worksheet, startRowIndex, startColIndex);
     }
 
