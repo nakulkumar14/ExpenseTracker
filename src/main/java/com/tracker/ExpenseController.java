@@ -5,6 +5,7 @@ import com.tracker.dto.ExpenseDetailDTO;
 import com.tracker.model.ExpenseDetail;
 import com.tracker.services.ExpenseService;
 import com.tracker.services.ExportService;
+import com.tracker.services.MailSenderService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class ExpenseController {
 
     @Autowired
     private ExportService exportService;
+
+    @Autowired
+    private MailSenderService mailSenderService;
 
     private Gson gson = new Gson();
 
@@ -134,6 +138,8 @@ public class ExpenseController {
         LOG.info("Request to generate report for : " + date);
         List<ExpenseDetail> expenseDetails = expenseService.getExpenses(date);
         exportService.exportToXLS(expenseDetails, date);
+        mailSenderService.sendMail("Report", "Test");
+
         return "index";
     }
 
