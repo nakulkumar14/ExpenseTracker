@@ -25,7 +25,7 @@ public class ExportServiceImpl implements ExportService {
     private static Logger LOG = Logger.getLogger(ExportServiceImpl.class);
 
     @Override
-    public void exportToXLS(List<ExpenseDetail> expenseDetails, String dateq) {
+    public String exportToXLS(List<ExpenseDetail> expenseDetails, String dateq) {
         LOG.info("Exporting to Excel report for : " + dateq);
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet worksheet = workbook.createSheet("Expense Worksheet");
@@ -48,8 +48,11 @@ public class ExportServiceImpl implements ExportService {
             FileOutputStream outputStream = new FileOutputStream(file, false);
             workbook.write(outputStream);
             outputStream.flush();
+            LOG.info("Report generated At : " + file.getAbsolutePath());
+            return file.getAbsolutePath();
         } catch (Exception e) {
             LOG.error("Exception occurred while writing to file : ", e);
+            return "";
         }
     }
 

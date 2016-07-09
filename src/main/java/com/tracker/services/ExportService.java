@@ -8,5 +8,5 @@ import java.util.List;
  * Created by nakulkumar on 27/6/16.
  */
 public interface ExportService {
-    void exportToXLS(List<ExpenseDetail> expenseDetails, String date);
+    String exportToXLS(List<ExpenseDetail> expenseDetails, String date);
 }

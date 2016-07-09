@@ -5,5 +5,5 @@ package com.tracker.services;
  */
 public interface MailSenderService {
 
-    void sendMail(String dear, String content);
+    void sendMail(String dear, String content, String attachmentPath);
 }

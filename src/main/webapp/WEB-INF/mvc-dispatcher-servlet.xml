@@ -77,7 +77,7 @@
     <bean id="customeMailMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="from" value="blueboy.neel@gmail.com"/>
         <property name="to" value="nakulkumar14.09@gmail.com"/>
-        <property name="subject" value="Testing Subject"/>
+        <property name="subject" value="Daily Report"/>
         <property name="text">
             <value>
                 <![CDATA[

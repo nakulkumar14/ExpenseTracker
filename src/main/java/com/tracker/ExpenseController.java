@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -137,8 +138,10 @@ public class ExpenseController {
 //        }
         LOG.info("Request to generate report for : " + date);
         List<ExpenseDetail> expenseDetails = expenseService.getExpenses(date);
-        exportService.exportToXLS(expenseDetails, date);
-        mailSenderService.sendMail("Report", "Test");
+        String absolutePathReport = exportService.exportToXLS(expenseDetails, date);
+        if (!StringUtils.isEmpty(absolutePathReport)) {
+            mailSenderService.sendMail("Nakul", "Report for " + date, absolutePathReport);
+        }
 
         return "index";
     }

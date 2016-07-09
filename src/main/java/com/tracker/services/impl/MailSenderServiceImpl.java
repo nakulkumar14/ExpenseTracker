@@ -1,8 +1,8 @@
 package com.tracker.services.impl;
 
 import com.tracker.services.MailSenderService;
+import org.apache.log4j.Logger;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.MailParseException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -17,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 @Service("mailSenderService")
 public class MailSenderServiceImpl implements MailSenderService {
 
+    private static Logger LOG = Logger.getLogger(MailSenderServiceImpl.class);
+
     private JavaMailSender mailSender;
     private SimpleMailMessage simpleMailMessage;
 
@@ -28,7 +30,8 @@ public class MailSenderServiceImpl implements MailSenderService {
         this.mailSender = mailSender;
     }
 
-    public void sendMail(String dear, String content) {
+    @Override
+    public void sendMail(String dear, String content, String attachmentPath) {
 
         MimeMessage message = mailSender.createMimeMessage();
 
@@ -38,15 +41,15 @@ public class MailSenderServiceImpl implements MailSenderService {
             helper.setFrom(simpleMailMessage.getFrom());
             helper.setTo(simpleMailMessage.getTo());
             helper.setSubject(simpleMailMessage.getSubject());
-            helper.setText(String.format(
-                    simpleMailMessage.getText(), dear, content));
+            helper.setText(String.format(simpleMailMessage.getText(), dear, content));
+            LOG.info("Mail sending details : "+simpleMailMessage);
 
-            FileSystemResource file = new FileSystemResource("/home/nakulkumar/Report-2016-07-09.xls");
+            FileSystemResource file = new FileSystemResource(attachmentPath);
             helper.addAttachment(file.getFilename(), file);
-
+            mailSender.send(message);
+            LOG.info("Mail sent successfully.");
         } catch (MessagingException e) {
-            throw new MailParseException(e);
+            LOG.error("Exception occurred while sending mail :", e);
         }
-        mailSender.send(message);
     }
 }
