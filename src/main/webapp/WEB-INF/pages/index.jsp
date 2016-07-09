@@ -25,6 +25,8 @@
         <tr>
             <th>Description</th>
             <th>Amount</th>
+            <th></th>
+            <th></th>
         </tr>
         <c:forEach var="expense" items="${expenseDetails}">
             <tr>
@@ -37,6 +39,8 @@
         <tr>
             <th>Total</th>
             <th>${totalExpenses}</th>
+            <th></th>
+            <th></th>
         </tr>
     </table>
     <br>
