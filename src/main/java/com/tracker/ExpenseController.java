@@ -33,6 +33,32 @@ public class ExpenseController {
 
     private Gson gson = new Gson();
 
+    @RequestMapping(value = "/UI", method = RequestMethod.GET)
+    public String indexUI() {
+        return "indexUI";
+    }
+
+    @RequestMapping(value = "test", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ExpenseDetail> test() {
+        LOG.info("Getting expense details for current day");
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        return expenseDetails;
+    }
+
+    @RequestMapping(value = "addExpense1", method = RequestMethod.POST)
+    @ResponseBody
+    public List<ExpenseDetail> addExpense1(@RequestBody ExpenseDetailDTO expenseDetailDTO) {
+        LOG.info("Request to add description : " + expenseDetailDTO.getDescription());
+        if(expenseDetailDTO==null || expenseDetailDTO.getDescription()==null || expenseDetailDTO.getAmount()==null)
+            return null;
+        expenseService.addExpense(expenseDetailDTO);
+
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        LOG.info("Expense Details fetched : " + expenseDetails.size());
+        return expenseDetails;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model) {
         LOG.info("Getting expense details for current day");

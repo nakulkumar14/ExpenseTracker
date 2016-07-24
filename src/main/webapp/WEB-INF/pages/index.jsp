@@ -13,6 +13,8 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <link href="/css/bootstrap.css" rel="stylesheet">
+<script src="/js/controller.js"></script>
+
 <style>
     #container {
         padding: 2%;
