@@ -45,4 +45,22 @@ var app = angular.module("myModule", [])
                 console.log("Error : "+response.data);
             });
         };
+
+        // Method to delete expense.
+        $scope.deleteExpense = function(id){
+            console.log("Delete expense with id : "+id);
+            $http({
+                method  : 'GET',
+                dataType: 'json',
+                url:"/deleteExpense/"+id,
+                //data:id,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).success(function(response){
+                console.log("Deleted : "+response);
+            }).error(function(response){
+                console.log(response);
+            });
+        };
     });

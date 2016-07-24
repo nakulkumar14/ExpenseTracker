@@ -50,13 +50,23 @@ public class ExpenseController {
     @ResponseBody
     public List<ExpenseDetail> addExpense1(@RequestBody ExpenseDetailDTO expenseDetailDTO) {
         LOG.info("Request to add description : " + expenseDetailDTO.getDescription());
-        if(expenseDetailDTO==null || expenseDetailDTO.getDescription()==null || expenseDetailDTO.getAmount()==null)
+        if (expenseDetailDTO == null || expenseDetailDTO.getDescription() == null || expenseDetailDTO.getAmount() == null)
             return null;
         expenseService.addExpense(expenseDetailDTO);
 
         List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
         LOG.info("Expense Details fetched : " + expenseDetails.size());
         return expenseDetails;
+    }
+
+    @RequestMapping(value = "/deleteExpense/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean deleteExpense(@PathVariable("id") Long id) {
+        LOG.info("Request to delete for id : " + id);
+        boolean result = expenseService.delete(id);
+        List<ExpenseDetail> expenseDetails = expenseService.getAllForToday();
+        LOG.info("Expense Details fetched : " + expenseDetails.size());
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -26,7 +26,7 @@
                 <td>{{detail.description}}</td>
                 <td>{{detail.amount}}</td>
                 <td><button type="button" class="btn btn-info">Edit</button>
-                    <button type="button" class="btn btn-info">Delete</button>
+                    <button type="button" class="btn btn-info" ng-click="deleteExpense(detail.id)">Delete</button>
                 </td>
             </tr>
             <tr>
