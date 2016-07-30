@@ -18,7 +18,7 @@ public interface ExpenseDetailDao {
 
     ExpenseDetail updateExpenseDetail(ExpenseDetail expenseDetail);
 
-    List<ExpenseDetail> getAll();
+    List<ExpenseDetail> getAllExpenseDetails();
 
     List<ExpenseDetail> getDetailsInRange(Date start, Date end);
 

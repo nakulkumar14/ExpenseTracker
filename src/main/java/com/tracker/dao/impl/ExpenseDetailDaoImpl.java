@@ -53,7 +53,7 @@ public class ExpenseDetailDaoImpl implements ExpenseDetailDao {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ExpenseDetail> getAll() {
+    public List<ExpenseDetail> getAllExpenseDetails() {
         return getCurrentSession().createQuery("from ExpenseDetail").list();
     }
 

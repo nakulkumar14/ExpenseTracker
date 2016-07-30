@@ -9,7 +9,7 @@ import java.util.List;
  * Created by nakulkumar on 24/6/16.
  */
 public interface ExpenseService {
-    void addExpense(ExpenseDetailDTO expenseDetailDTO);
+    boolean addExpense(ExpenseDetailDTO expenseDetailDTO);
 
     List<ExpenseDetail> getExpenses(String date);
 
@@ -19,7 +19,7 @@ public interface ExpenseService {
 
     boolean delete(Long id);
 
-    List<ExpenseDetail> getAll();
+    List<ExpenseDetail> getAllExpenseDetails();
 
     List<ExpenseDetail> getAllForToday();
 

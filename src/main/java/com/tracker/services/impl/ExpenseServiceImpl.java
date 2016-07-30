@@ -24,12 +24,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseDetailDao expenseDetailDao;
 
     @Override
-    public void addExpense(ExpenseDetailDTO expenseDetailDTO) {
-        ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
-        if (expenseDetail.getCreated() == null)
-            expenseDetail.setCreated(new Date());
-        expenseDetail.setUpdated(new Date());
-        expenseDetailDao.save(expenseDetail);
+    public boolean addExpense(ExpenseDetailDTO expenseDetailDTO) {
+        try {
+            ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
+            if (expenseDetail.getCreated() == null) {
+                expenseDetail.setCreated(new Date());
+            }
+            expenseDetail.setUpdated(new Date());
+            expenseDetailDao.save(expenseDetail);
+            return true;
+        } catch (Exception e) {
+            LOG.error("Exception while adding expense detail : ", e);
+            return false;
+        }
     }
 
     @Override
@@ -56,8 +63,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseDetail> getAll() {
-        return expenseDetailDao.getAll();
+    public List<ExpenseDetail> getAllExpenseDetails() {
+        return expenseDetailDao.getAllExpenseDetails();
     }
 
     @Override
