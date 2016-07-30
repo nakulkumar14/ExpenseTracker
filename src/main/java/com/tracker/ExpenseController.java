@@ -116,13 +116,4 @@ public class ExpenseController {
 
         return "indexUI";
     }
-
-
-    private Double sumTotalExpenses(List<ExpenseDetail> expenseDetails) {
-        Double totalExpenses = 0.0;
-        for (ExpenseDetail expenseDetail : expenseDetails) {
-            totalExpenses += expenseDetail.getAmount();
-        }
-        return totalExpenses;
-    }
 }
