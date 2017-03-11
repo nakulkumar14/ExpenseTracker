@@ -18,14 +18,17 @@ import java.util.*;
 @Service("expenseService")
 public class ExpenseServiceImpl implements ExpenseService {
 
-    private static Logger LOG = Logger.getLogger(ExpenseServiceImpl.class);
+    private static final Logger LOG = Logger.getLogger(ExpenseServiceImpl.class);
 
     @Autowired
     private ExpenseDetailDao expenseDetailDao;
 
+    @Autowired
+    private ExpenseConvertor expenseConvertor;
+
     @Override
     public void addExpense(ExpenseDetailDTO expenseDetailDTO) {
-        ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
+        ExpenseDetail expenseDetail = expenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
         if (expenseDetail.getCreated() == null)
             expenseDetail.setCreated(new Date());
         expenseDetail.setUpdated(new Date());
@@ -96,7 +99,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseDetail updateExpenseDetail(ExpenseDetailDTO expenseDetailDTO) {
-        ExpenseDetail expenseDetail = ExpenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
+        ExpenseDetail expenseDetail = expenseConvertor.getExpressDetailFromDTO(expenseDetailDTO);
         expenseDetail.setId(expenseDetailDTO.getId());
         expenseDetail.setUpdated(new Date());
         return expenseDetailDao.updateExpenseDetail(expenseDetail);

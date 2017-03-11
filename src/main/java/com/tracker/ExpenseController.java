@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/")
 public class ExpenseController {
 
-    private static Logger LOG = Logger.getLogger(ExpenseController.class);
+    private static final Logger LOG = Logger.getLogger(ExpenseController.class);
 
     @Autowired
     private ExpenseService expenseService;
@@ -61,7 +61,9 @@ public class ExpenseController {
     @RequestMapping(value = "getMonthlyExpenses", method = RequestMethod.POST)
     @ResponseBody
     public String getMonthlyExpenses(@RequestParam("month") String month, @RequestParam("year") String year) {
+        LOG.info("Request to get expenses for month : "+month+" and year : "+year);
         List<ExpenseDetail> expenseDetails = expenseService.getMonthlyExpenses(month, year);
+        LOG.info("[getMonthlyExpenses] Fetched monthly details : "+expenseDetails);
         return gson.toJson(expenseDetails);
     }
 

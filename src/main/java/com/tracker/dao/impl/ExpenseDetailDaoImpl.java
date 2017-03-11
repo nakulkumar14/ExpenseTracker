@@ -23,7 +23,7 @@ import java.util.List;
 @Repository("expenseDetailDao")
 public class ExpenseDetailDaoImpl implements ExpenseDetailDao {
 
-    private static Logger LOG = Logger.getLogger(ExpenseDetailDaoImpl.class);
+    private static final Logger LOG = Logger.getLogger(ExpenseDetailDaoImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -68,6 +68,7 @@ public class ExpenseDetailDaoImpl implements ExpenseDetailDao {
     @Transactional(readOnly = true)
     @Override
     public List<ExpenseDetail> getMonthlyExpenses(Date date) {
+        LOG.info("[expenseDetailDao][getMonthlyExpenses] Fetching monthly expenses for : "+date);
         Query query = getCurrentSession().createQuery("from ExpenseDetail where created like concat(:created,'%')");
         query.setParameter("created", new SimpleDateFormat("yyyy-MM").format(date));
         return query.list();
